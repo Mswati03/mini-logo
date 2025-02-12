@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const { prompt } = await req.json()
 
     const { text } = await generateText({
-      model: replicate.language("recraft-ai/recraft-v3-text"),
+      model: replicate.languageModel("recraft-ai/recraft-v3-text"),
       prompt,
     })
 

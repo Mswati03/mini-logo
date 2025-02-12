@@ -14,6 +14,7 @@ import IconSelector from "./icon-selector"
 import { fonts, defaultSettings } from "./constants"
 import type { LogoSettings, ExportFormat } from "./types"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function LogoDesigner() {
   const [settings, setSettings] = useState<LogoSettings>(defaultSettings)
@@ -58,7 +59,7 @@ export default function LogoDesigner() {
         <div className="flex-1 p-4 md:p-8 md:w-2/3">
           <div className="sticky top-8">
             <div className="mb-6 flex items-center justify-between flex-wrap">
-               <Image src="https://kokonutui.com/logo.svg" alt="Kokonut UI" width={20} height={20} />
+               <Link href="/"><Image src="https://kokonutui.com/logo.svg" alt="Kokonut UI" width={20} height={20} /></Link>
               <div className="flex flex-wrap gap-2 mt-4 md:mt-0">
                 <Button variant="outline" onClick={() => handleExport("svg")} disabled={isExporting} className="whitespace-nowrap">
                   <Download className="mr-2 h-4 w-4" />

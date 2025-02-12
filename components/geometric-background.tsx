@@ -183,9 +183,10 @@ export default function HeroGeometric({
           <motion.div custom={2} variants={fadeUpVariants} initial="hidden" animate="visible">
             <p className="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
               Craft a unique brand identity for your business or brand with our free logo maker
-            </p>
+            </p> 
+            <Link href="/design" ><PulsatingButton className="mx-auto text-center">Get Started</PulsatingButton></Link> 
           </motion.div>
-         <Link href="/design" ><PulsatingButton className="mx-auto text-center">Get Started</PulsatingButton></Link> 
+        
         </div>
       </div>
 
