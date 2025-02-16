@@ -1,56 +1,61 @@
-"use client"
-
-import { Suspense, useState } from "react"
-import { Download } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { toast } from "sonner"
-import ColorPicker from "./color-picker"
-import IconSelector from "./icon-selector"
-import { fonts, defaultSettings } from "./constants"
-import type { LogoSettings, ExportFormat } from "./types"
-import Image from "next/image"
-import Link from "next/link"
+"use client";
+import { toPng, toSvg } from "html-to-image";
+import { Suspense, useState, useRef } from "react";
+import { ArrowLeft, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { toast } from "sonner";
+import ColorPicker from "./color-picker";
+import IconSelector from "./icon-selector";
+import { fonts, defaultSettings } from "./constants";
+import type { LogoSettings, ExportFormat } from "./types";
+import Link from "next/link";
 
 export default function LogoDesigner() {
-  const [settings, setSettings] = useState<LogoSettings>(defaultSettings)
-  const [isExporting, setIsExporting] = useState(false)
+  const [settings, setSettings] = useState<LogoSettings>(defaultSettings);
+  const [isExporting, setIsExporting] = useState(false);
+  const svgRef = useRef<HTMLDivElement>(null);
 
   const handleExport = async (format: ExportFormat) => {
     try {
-      setIsExporting(true)
-      const response = await fetch("/api/export", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ settings, format }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || "Failed to export logo")
+      setIsExporting(true);
+  
+      if (!svgRef.current) {
+        throw new Error("Preview element not found");
       }
-
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `logo.${format}`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-
-      toast.success(`Logo exported as ${format.toUpperCase()}`)
+  
+      if (format === "svg") {
+        const svgData = await toSvg(svgRef.current);
+        const blob = new Blob([svgData], { type: "image/svg+xml" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "logo.svg";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        toast.success("Logo exported as SVG");
+      } else if (format === "png") {
+        const pngData = await toPng(svgRef.current);
+        const a = document.createElement("a");
+        a.href = pngData;
+        a.download = "logo.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        toast.success("Logo exported as PNG");
+      }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to export logo")
+      toast.error(error instanceof Error ? error.message : "Failed to export logo");
     } finally {
-      setIsExporting(false)
+      setIsExporting(false);
     }
-  }
+  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -59,12 +64,9 @@ export default function LogoDesigner() {
         <div className="flex-1 p-4 md:p-8 md:w-2/3">
           <div className="sticky top-8">
             <div className="mb-6 flex items-center justify-between flex-wrap">
-               <Link href="/"><Image src="https://kokonutui.com/logo.svg" alt="Kokonut UI" width={20} height={20} /></Link>
-              <div className="flex flex-wrap gap-2 mt-4 md:mt-0">
-                <Button variant="outline" onClick={() => handleExport("svg")} disabled={isExporting} className="whitespace-nowrap">
-                  <Download className="mr-2 h-4 w-4" />
-                  Export SVG
-                </Button>
+             <Link href="/"> <ArrowLeft className="h-7 w-7 mt-1 " /></Link>
+              <div className="flex flex-wrap gap-2 mx-auto mt-4 md:mt-0">
+               
                 <Button
                   onClick={() => handleExport("png")}
                   disabled={isExporting}
@@ -76,7 +78,10 @@ export default function LogoDesigner() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-2xl bg-white/50 p-4 md:p-8 shadow-lg backdrop-blur-sm">
+            <div
+              ref={svgRef}
+              className="overflow-hidden rounded-2xl p-4 md:p-8 shadow-lg backdrop-blur-sm"
+            >
               <div
                 className="aspect-video rounded-lg"
                 style={{
@@ -251,5 +256,5 @@ export default function LogoDesigner() {
         </div>
       </div>
     </Suspense>
-  )
+  );
 }

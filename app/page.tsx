@@ -14,14 +14,14 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20">
+      <section className="py-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="mb-12 text-center text-3xl font-bold">Why Choose Our Logo Maker?</h2>
           <div className="grid gap-8 md:grid-cols-3">
             <FeatureCard
               icon={<Zap className="h-8 w-8 text-yellow-400" />}
               title="Lightning Fast"
-              description="Create professional logos in minutes, not hours."
+              description="Create a minimal logo in minutes, not hours."
             />
             <FeatureCard
               icon={<Palette className="h-8 w-8 text-green-400" />}
@@ -31,7 +31,7 @@ export default function LandingPage() {
             <FeatureCard
               icon={<Download className="h-8 w-8 text-blue-400" />}
               title="Easy Export"
-              description="Download your logo in SVG and PNG formats for any use."
+              description="Download your logo in  PNG format for any use."
             />
           </div>
         </div>
@@ -42,7 +42,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-gray-900 py-8">
         <div className="container mx-auto px-4 text-center text-gray-400 sm:px-6 lg:px-8">
-          © 2023 MiniLogo. All rights reserved.
+          © 2025 MiniLogo. All rights reserved. 
         </div>
       </footer>
     </div>
