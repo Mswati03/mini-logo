@@ -1,6 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Zap, Palette, Download } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Zap, Palette, Download } from "lucide-react"
 
 import HeroGeometric from "@/components/geometric-background"
 
@@ -42,7 +41,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-gray-900 py-8">
         <div className="container mx-auto px-4 text-center text-gray-400 sm:px-6 lg:px-8">
-          © 2025 MiniLogo. All rights reserved. 
+          © 2025 MiniLogo. All rights reserved. Developed by <Link href="htpps://mswati.netlify.app">Mswati Tshabalala</Link>
         </div>
       </footer>
     </div>
