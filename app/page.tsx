@@ -41,7 +41,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-gray-900 py-8">
         <div className="container mx-auto px-4 text-center text-gray-400 sm:px-6 lg:px-8">
-          © 2025 MiniLogo. All rights reserved. Developed by <Link href="htpps://mswati.netlify.app">Mswati Tshabalala</Link>
+          © 2025 MiniLogo. All rights reserved. Developed by <Link href="htpps://mswati.netlify.app" className="hover:text-blue-400" target="_blank">Mswati Tshabalala</Link>
         </div>
       </footer>
     </div>
