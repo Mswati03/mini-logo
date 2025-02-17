@@ -1,6 +1,6 @@
 "use client";
 import { toPng, toSvg } from "html-to-image";
-import { useState, useRef, useCallback, ReactNode } from "react";
+import { useState, useRef, useCallback } from "react";
 import { ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
