@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+
 import { Cloud, Star, Heart, Sun, Moon, Zap, Leaf, Diamond, Crown, Rocket } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
