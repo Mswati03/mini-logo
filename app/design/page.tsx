@@ -1,6 +1,6 @@
 "use client";
 import { toPng, toSvg } from "html-to-image";
-import { Suspense, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,7 +58,7 @@ export default function LogoDesigner() {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    
       <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
         {/* Preview Section */}
         <div className="flex-1 p-4 md:p-8 md:w-2/3">
@@ -255,6 +255,6 @@ export default function LogoDesigner() {
           </div>
         </div>
       </div>
-    </Suspense>
+
   );
 }
