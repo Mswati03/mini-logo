@@ -22,9 +22,3 @@ export interface IconCategory {
   }>
 }
 
-interface IconSelectorProps {
-  selectedIcon: string | null
-  onSelect: (icon: string | null) => void
-  rotation: number
-  onRotationChange: (rotation: number) => void
-}
