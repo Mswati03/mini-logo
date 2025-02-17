@@ -28,9 +28,7 @@ interface IconSelectorProps {
 }
 
 export default function IconSelector({ selectedIcon, onSelect, rotation, onRotationChange }: IconSelectorProps) {
-  const [search, setSearch] = useState("")
-  setSearch(search);
-  const filteredIcons = icons.filter((icon) => icon.name.toLowerCase().includes(search.toLowerCase()))
+  const filteredIcons = icons.filter((icon) => icon.name.toLowerCase().includes(""))
 
   return (
     <div className="space-y-4">
