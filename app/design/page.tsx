@@ -1,6 +1,6 @@
 "use client";
 import { toPng, toSvg } from "html-to-image";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,14 +20,14 @@ export default function LogoDesigner() {
   const [isExporting, setIsExporting] = useState(false);
   const svgRef = useRef<HTMLDivElement>(null);
 
-  const handleExport = async (format: ExportFormat) => {
+  const handleExport = useCallback(async (format: ExportFormat) => {
     try {
       setIsExporting(true);
-  
+
       if (!svgRef.current) {
         throw new Error("Preview element not found");
       }
-  
+
       if (format === "svg") {
         const svgData = await toSvg(svgRef.current);
         const blob = new Blob([svgData], { type: "image/svg+xml" });
@@ -55,8 +55,14 @@ export default function LogoDesigner() {
     } finally {
       setIsExporting(false);
     }
-  };
+  }, []);
 
+  useEffect(() => {
+    // only update the settings state when necessary
+    if (JSON.stringify(settings) !== JSON.stringify(defaultSettings)) {
+      setSettings((prevSettings) => ({ ...prevSettings }));
+    }
+  }, [settings]);
   return (
     
       <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
