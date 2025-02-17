@@ -1,6 +1,6 @@
 "use client";
 import { toPng, toSvg } from "html-to-image";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, ReactNode } from "react";
 import { ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -56,7 +56,7 @@ export default function LogoDesigner() {
     }
   }, []);
 
-  const handleChange = (key: keyof LogoSettings, value: any) => {
+  const handleChange = (key: keyof LogoSettings, value: string | number | null) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -165,7 +165,13 @@ export default function LogoDesigner() {
 
           <IconSelector
             selectedIcon={settings.icon}
-            onSelect={(icon) => handleChange("icon", icon)}
+            onSelect={(icon: ReactNode) => {
+              if (typeof icon === 'string' || typeof icon === 'number' || icon === null) {
+                handleChange("icon", icon);
+              } else {
+                console.error('Invalid icon type');
+              }
+            }}
             rotation={settings.iconRotation}
             onRotationChange={(rotation) => handleChange("iconRotation", rotation)}
           />
